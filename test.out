@@ -1,0 +1,4 @@
+int a{int};
+fn : () int main{() -> int} {
+    a{int} = 4;
+}

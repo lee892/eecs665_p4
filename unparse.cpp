@@ -345,15 +345,20 @@ void IDNode::unparse(std::ostream& out, int indent){
 	// attached during name analysis
 	SemSymbol* s = getSymbol();
 	out << "{";
-	if (s->kind == "var") {
-		out << s->getType();
+	if (s->getKind() == "var") {
+		
+		s->getType()->unparse(out, 0);
 	} else {
+		
 		out << "(";
-		for (auto n: *s->formals) {
-			out << n;
+		bool firstFormal = true;
+		for(auto formal : *s->formals){
+			if (firstFormal) { firstFormal = false; }
+			else { out << ", "; }
+			formal->unparse(out, 0);
 		}
 		out << ") -> ";
-		out << s->getType();
+		s->getType()->unparse(out, 0);
 	}
 	out << "}";
 }

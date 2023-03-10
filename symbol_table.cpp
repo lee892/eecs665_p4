@@ -1,4 +1,5 @@
 #include "symbol_table.hpp"
+#include <iostream>
 namespace jeff{
 
 ScopeTable::ScopeTable(){
@@ -6,14 +7,20 @@ ScopeTable::ScopeTable(){
 }
 
 void ScopeTable::addToScope(SemSymbol* s) {
-	(*symbols)[s->getName()] = s;
+	std::cout << s->getId()->getName() << "\n";
+	std::cout << s->getKind() << "\n";
+	(*symbols)[s->getId()->getName()] = s;
 }
 
-bool ScopeTable::lookup(std::string symbol) {
+SemSymbol* ScopeTable::lookup(std::string symbol, std::string kind) {
 	if (symbols->find(symbol) == symbols->end()) {
-		return false;
+		return nullptr;
 	}
-	return true;
+	SemSymbol* found = (*symbols)[symbol];
+	if (found->getKind() == kind) {
+		return found;
+	}
+	return nullptr;
 }
 
 SymbolTable::SymbolTable(){
@@ -33,19 +40,22 @@ void SymbolTable::addScope() {
 
 void SymbolTable::dropScope() {
 	scopeTableChain->pop_front();
+
 }
 
 void SymbolTable::addToScope(SemSymbol* s) {
 	scopeTableChain->front()->addToScope(s);
 }
 
-bool SymbolTable::lookup(std::string symbol) {
+SemSymbol* SymbolTable::lookup(std::string symbol, std::string kind) {
+	SemSymbol* s;
 	for (auto scope : *scopeTableChain) {
-		if (scope->lookup(symbol)) {
-			return true;
+		s = scope->lookup(symbol, kind);
+		if (s != nullptr) {
+			return s;
 		}
 	}
-	return false;
+	return s;
 }
 
 }

@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include <list>
+#include "ast.hpp"
 
 //Use an alias template so that we can use
 // "HashMap" and it means "std::unordered_map"
@@ -23,19 +24,18 @@ class SemSymbol {
 	// (i.e. the kind of the symbol (either a variable or function)
 	// and functions to get/set those fields
 	public:
-	std::string name;
+	SemSymbol(IDNode* idIn, std::string kindIn, TypeNode* typeIn)
+	: id(idIn), kind(kindIn), type(typeIn) {}
+	SemSymbol(IDNode* idIn, std::string kindIn, TypeNode* typeIn, std::list<FormalDeclNode*>* formalsIn)
+	: id(idIn), kind(kindIn), type(typeIn), formals(formalsIn) {}
+	IDNode* id;
 	std::string kind;
-	std::string type;
-	std::list<std::string>* formals;
-	std::string getName() { return name; }
+	TypeNode* type;
+	std::list<FormalDeclNode*>* formals;
+	IDNode* getId() { return id; }
 	std::string getKind() { return kind; }
-	void setKind(std::string k) { kind = k; }
-	std::string getType() { return type; }
-	void setType(std::string t) { type = t; }
-	void setType(std::list<std::string>* f, std::string ret) {
-		formals = f;
-		type = ret;
-	}
+	TypeNode* getType() { return type; }
+
 };
 
 //A single scope. The symbol table is broken down into a 
@@ -52,7 +52,7 @@ class ScopeTable {
 		// that the symbol does not exist within the
 		// current scope.
 		void addToScope(SemSymbol* s);
-		bool lookup(std::string symbol);
+		SemSymbol* lookup(std::string symbol, std::string kind);
 	private:
 		HashMap<std::string, SemSymbol *> * symbols;
 };
@@ -66,7 +66,7 @@ class SymbolTable{
 		void addScope();
 		void dropScope();
 		void addToScope(SemSymbol* s);
-		bool lookup(std::string symbol);
+		SemSymbol* lookup(std::string symbol, std::string kind);
 	private:
 		std::list<ScopeTable *> * scopeTableChain;
 };

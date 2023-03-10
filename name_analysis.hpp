@@ -3,6 +3,7 @@
 
 #include "ast.hpp"
 #include "symbol_table.hpp"
+#include <iostream>
 
 namespace jeff{
 

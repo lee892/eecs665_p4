@@ -1,0 +1,7 @@
+fn : (bool t, int a) bool test {
+
+}
+
+fn : (int a) bool test {
+
+}
