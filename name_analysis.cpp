@@ -97,27 +97,43 @@ bool AssignStmtNode::nameAnalysis(SymbolTable* symTab) {
 }
 
 bool OpenStmtNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	handle->nameAnalysis(symTab);
+
+	return nameAnalysisOk;
 }
 
 bool CloseStmtNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	handle->nameAnalysis(symTab);
+
+	return nameAnalysisOk;
 }
 
 bool ReadStmtNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myHandle->nameAnalysis(symTab);
+	myDst->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool WriteStmtNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myHandle->nameAnalysis(symTab);
+	mySrc->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool PostDecStmtNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myLoc->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool PostIncStmtNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myLoc->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool WhileStmtNode::nameAnalysis(SymbolTable* symTab) {
@@ -133,71 +149,114 @@ bool IfStmtNode::nameAnalysis(SymbolTable* symTab) {
 }
 
 bool ReturnStmtNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool CallExpNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myID->nameAnalysis(symTab);
+	for (auto exp : *myArgs) {
+		exp->nameAnalysis(symTab);
+	}
+	return nameAnalysisOk;
 }
 
 bool PlusNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp1->nameAnalysis(symTab);
+	myExp2->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool MinusNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp1->nameAnalysis(symTab);
+	myExp2->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool TimesNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp1->nameAnalysis(symTab);
+	myExp2->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool DivideNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp1->nameAnalysis(symTab);
+	myExp2->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool AndNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp1->nameAnalysis(symTab);
+	myExp2->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool OrNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp1->nameAnalysis(symTab);
+	myExp2->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool EqualsNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp1->nameAnalysis(symTab);
+	myExp2->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool NotEqualsNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp1->nameAnalysis(symTab);
+	myExp2->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool LessNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp1->nameAnalysis(symTab);
+	myExp2->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool LessEqNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp1->nameAnalysis(symTab);
+	myExp2->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool GreaterNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp1->nameAnalysis(symTab);
+	myExp2->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool GreaterEqNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
-}
-
-bool UnaryExpNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp1->nameAnalysis(symTab);
+	myExp2->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool NegNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool NotNode::nameAnalysis(SymbolTable* symTab) {
-	return true;
+	bool nameAnalysisOk = true;
+	myExp->nameAnalysis(symTab);
+	return nameAnalysisOk;
 }
 
 bool TernaryExpNode::nameAnalysis(SymbolTable* symTab) {
